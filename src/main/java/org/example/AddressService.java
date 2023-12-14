@@ -6,38 +6,41 @@ import org.example.model.Address;
 import java.util.*;
 
 public class AddressService {
-    public Set<Address> addressSet = new HashSet();
-    public Map<Address, Integer> duplicateAddress = new HashMap<>();
+    private Set<Address> addressSet = new HashSet();
+    private Map<Address, Integer> duplicateAddress = new HashMap<>();
+
 
     public void getDuplicatesAddress(String city, String street, int home, int floor) {
+        Address address = new Address(city,street,home,floor);
 
-        if(addressSet.contains(new Address(city,street,home,floor))){
+        if(addressSet.contains(address)){
 
-            if(!duplicateAddress.containsKey(new Address(city,street,home,floor))) {
-                duplicateAddress.put(new Address(city, street, home, floor), 2);
+            if(!duplicateAddress.containsKey(address)) {
+                duplicateAddress.put(address, 1);
             }else {
                 int countDuplicate = 0;
                 Set<Map.Entry<Address, Integer>> duplicate = duplicateAddress.entrySet();
                 for(Map.Entry<Address, Integer> k : duplicate){
                     countDuplicate = k.getValue();
                 }
-                duplicateAddress.replace(new Address(city,street,home,floor),countDuplicate,countDuplicate+1);
+                duplicateAddress.replace(address,countDuplicate,countDuplicate+1);
             }
         }
-        addressSet.add(new Address(city, street, home, floor));
+        addressSet.add(address);
+
     }
 
     public void countDuplicate() {
         Set<Map.Entry<Address, Integer>> duplicates = duplicateAddress.entrySet();
         if(!duplicates.isEmpty()) {
             System.out.println("Duplicate addresses:");
+
         }
         for(Map.Entry<Address, Integer> d : duplicates) {
             System.out.println(d.getKey().getCity()
                     + ", " + d.getKey().getStreet()
                     + ", " + d.getKey().getHouse()
                     +  ". Count duplicate - " + d.getValue() );
-
         }
     }
     public void countFloorsInCity() {
@@ -68,8 +71,10 @@ public class AddressService {
                 " three-story houses: " + three + "\n" +
                 " four-story houses: " + four + "\n" +
                 " five-story houses: " + five + "\n");
-
-
+    }
+    public void clear() {
+        addressSet.clear();
+        duplicateAddress.clear();
     }
 
 }

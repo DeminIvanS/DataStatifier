@@ -43,8 +43,9 @@ public class Parser {
         }
         addressService.countDuplicate();
         addressService.countFloorsInCity();
-        addressService.addressSet.clear();
-        addressService.duplicateAddress.clear();
+        addressService.clear();
+        in.close();
+
         }catch (FileNotFoundException e) {
             String message =
             e.getMessage() + " The specified file does not exist in this directory, please specify a different path.";
@@ -71,8 +72,8 @@ public class Parser {
             }
             addressService.countDuplicate();
             addressService.countFloorsInCity();
-            addressService.addressSet.clear();
-            addressService.duplicateAddress.clear();
+            addressService.clear();
+
         }catch (FileNotFoundException e){
 
             String message =
